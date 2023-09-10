@@ -1,6 +1,6 @@
 import time
 from image_reader import read_image, file_reader
-from cobra_signals import my_trading_algo
+from cobra.cobra_signals import my_trading_algo
 
 
 if __name__ == "__main__":
@@ -9,8 +9,8 @@ if __name__ == "__main__":
     print("\n Analysing the stock data which you requested...")
 
     stocks = file_reader()
-
+    data = []
     for stock in stocks:
-        my_trading_algo(str(stock))
+        data.append(my_trading_algo(str(stock)))
 
-    
+    print([i for i in data if i != ''])

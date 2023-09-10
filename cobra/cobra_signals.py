@@ -6,7 +6,7 @@ import talib
 import datetime
 import yfinance as yf
 import plotly.graph_objects as go
-from cobra_filter import filter_rows
+from cobra.cobra_filter import filter_rows
 from collections import defaultdict
 
 # Fetching data from yfinance
@@ -80,7 +80,7 @@ def apply_rsi_strategy(stock_df, rsi_period = 14):
 def show_signals(scrip_name, stock):
     data = []
     count = 0
-    result = []
+    result = ""
     for index, row in stock.iterrows():
         data.append((index, row, count))
         count += 1
@@ -88,12 +88,13 @@ def show_signals(scrip_name, stock):
         if (row['indicator'] == 'BUY') and index.date() >= date(2023, 9, 1):
             # filter_rows(data, count)
             #print("indicator:", row['indicator'], "date:", index)
-            result.append(scrip_name)
+            result = scrip_name
         if (row['indicator'] == 'SELL'):
             #print("indicator:", row['indicator'], "date:", index)
             pass
     
-    print(result)
+    return result
+
 
 
     
@@ -147,6 +148,6 @@ def my_trading_algo(scrip_name):
     stock = apply_trading_algo(stock)
 
     # # Plot the buy/sell recommendations on 2021 data
-    show_signals(scrip_name, stock)
+    result = show_signals(scrip_name, stock)
     
-    return stock
+    return result
